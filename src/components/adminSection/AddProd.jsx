@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import axios from 'axios';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AddProductPage() {
-
   const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    price: '',
-    stock: '',
-    description: '',
+    title: "",
+    category: "",
+    price: "",
+    stock: "",
+    description: "",
   });
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,25 +22,44 @@ export default function AddProductPage() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const response = await axios.post("/api/ProductDetails",formData);
-        if(response.data.success){
-            toast.success(response.data.message,{position:"top-center"})
-        }
-    } catch (error) {
-        console.log(error)
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    // Upload image first
+    const imageData = new FormData();
+    imageData.append("file", image);
+
+    const uploadRes = await axios.post(
+      "/api/image-upload",
+      imageData
+    );
+
+    const imageUrl = uploadRes.data.imageUrl;
+
+    // Send product details
+    const response = await axios.post(
+      "/api/ProductDetails",
+      {
+        ...formData,
+        image: imageUrl,
+      }
+    );
+
+    if (response.data.success) {
+      toast.success(response.data.message, {
+        position: "top-center",
+      });
     }
-  };
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  }
+};
 
   return (
     <div className="min-h-screen  flex items-center justify-center text-slate-800 p-6 md:p-12">
-
       <main className="w-full max-w-2xl flex flex-col justify-center overflow-y-auto">
-
-
-
         <div className="bg-white p-8 rounded-xl border border-slate-200/80 shadow-md">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -52,9 +71,11 @@ export default function AddProductPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-
             <div>
-              <label htmlFor="title" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+              <label
+                htmlFor="title"
+                className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2"
+              >
                 Product Title
               </label>
               <input
@@ -70,7 +91,10 @@ export default function AddProductPage() {
             </div>
 
             <div>
-              <label htmlFor="category" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+              <label
+                htmlFor="category"
+                className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2"
+              >
                 Category
               </label>
               <div className="relative">
@@ -82,7 +106,9 @@ export default function AddProductPage() {
                   className="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-lg outline-none text-slate-900 focus:bg-white focus:border-[#ff9900] focus:ring-2 focus:ring-[#ff9900]/10 transition-all text-sm appearance-none cursor-pointer"
                   required
                 >
-                  <option value="" disabled className="text-slate-400">Select a category</option>
+                  <option value="" disabled className="text-slate-400">
+                    Select a category
+                  </option>
                   <option value="Electronics">Electronics</option>
                   <option value="Clothing">Clothing & Apparel</option>
                   <option value="Home-appliances">Home Appliances</option>
@@ -90,8 +116,18 @@ export default function AddProductPage() {
                   <option value="Sports">Sports & Outdoors</option>
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -99,7 +135,10 @@ export default function AddProductPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="price" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+                <label
+                  htmlFor="price"
+                  className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2"
+                >
                   Price ($)
                 </label>
                 <input
@@ -117,7 +156,10 @@ export default function AddProductPage() {
               </div>
 
               <div>
-                <label htmlFor="stock" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+                <label
+                  htmlFor="stock"
+                  className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2"
+                >
                   Stock Quantity
                 </label>
                 <input
@@ -135,7 +177,10 @@ export default function AddProductPage() {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+              <label
+                htmlFor="description"
+                className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2"
+              >
                 Description
               </label>
               <textarea
@@ -146,6 +191,19 @@ export default function AddProductPage() {
                 placeholder="Provide detailed description of item features, materials, or warranty specs..."
                 rows="4"
                 className="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-lg outline-none text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff9900] focus:ring-2 focus:ring-[#ff9900]/10 transition-all text-sm resize-y"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
+                Product Image
+              </label>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files[0])}
+                className="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-lg"
                 required
               />
             </div>

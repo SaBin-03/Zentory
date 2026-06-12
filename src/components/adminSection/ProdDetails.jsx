@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 export default function ProductsTableContent() {
   const [products, setproducts] = useState([]);
@@ -56,7 +57,15 @@ export default function ProductsTableContent() {
                       key={idx}
                       className="hover:bg-slate-50/50 transition-colors"
                     >
-                      <td className="py-4 px-6 font-medium text-slate-900 max-w-xs truncate">
+                      <td className="py-4 px-6 font-medium text-slate-900 max-w-xs truncate flex">
+                        <Image
+                          src={product.image}
+                          width={50}
+                          height={50}
+                          alt={product.title}
+                           priority
+                           className="w-full"
+                        />
                         {product.title}
                       </td>
                       <td className="py-4 px-6 text-slate-500">

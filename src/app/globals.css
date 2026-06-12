@@ -13,6 +13,7 @@
   --color-darkColor: #151515;
   --color-lightColor: #52525b;
   --color-lightOrange: #fca99b;
+  --color-dark_blue:#6c7fd8;
 }
 .hoverEffect {
   transition: all 0.3s ease;

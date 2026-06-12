@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req) {
   try {
+    await mongoConnect();
     const details = await ProdModel.find();
     if (!details)
       return NextResponse.json(
@@ -34,7 +35,7 @@ export async function POST(req) {
   try {
     await mongoConnect();
 
-    const { title, description, category, price, stock } =
+    const { title, description, category, price, stock,image } =
       await req.json();
 
     if (!title || !category || !price) {
@@ -53,6 +54,7 @@ export async function POST(req) {
       category,
       price,
       stock,
+      image
     });
 
     await newDataProd.save();
