@@ -1,6 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import { ShoppingCart, Star } from "lucide-react"; // Optional: Install lucide-react for icons
+import { ShoppingCart, Star, StarIcon } from "lucide-react"; // Optional: Install lucide-react for icons
+import AddToFav from "./AddToFav";
+import AddToCartBtn from "./AddToCartBtn";
+import Link from "next/link";
+import { color } from "motion";
 
 const ProductCard = ({ item }) => {
   const {
@@ -10,14 +14,13 @@ const ProductCard = ({ item }) => {
     price = 0,
     oldPrice,
     rating = 4.5,
-    isSale = false,
+    isSale = true,
   } = item || {};
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-
+    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300  hover:shadow-md">
+      <AddToFav />
       <div className="relative aspect-square w-full overflow-hidden bg-gray-50">
-
         {isSale && (
           <span className="absolute left-3 top-3 z-10 rounded-full bg-red-500 px-2.5 py-1 text-xs font-semibold text-white shadow-sm">
             Sale
@@ -25,14 +28,16 @@ const ProductCard = ({ item }) => {
         )}
 
         {image ? (
-          <Image
-            src={image}
-            alt={name}
-            fill
-            priority
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-100"
-          />
+          <Link href={`/product/${item.title}`}>
+            <Image
+              src={image}
+              alt={name}
+              fill
+              priority
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-contain p-4 transition-transform duration-500 ease-out "
+            />
+          </Link>
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">
             No Image
@@ -52,7 +57,21 @@ const ProductCard = ({ item }) => {
         <h3 className="mb-2 line-clamp-2 text-sm font-semibold text-gray-800 transition-colors group-hover:text-shop_light_green">
           {name}
         </h3>
-
+        <div className="flex items-center gap-1">
+          {[...Array(5)].map((_, idx) => (
+            <StarIcon
+              key={idx}
+              size={15}
+              className={
+                idx < 4 ? "text-shop_lighter_green" : "text-shop_light_text"
+              }
+              fill={
+                idx < 4 ? "lightgreen" : "text-shop_light_text"
+              }
+            />
+          ))}
+        </div>
+        <h4 className="text-sm">In Stock {item.stock}</h4>
         <div className="mt-auto flex items-center justify-between pt-2">
           <div className="flex flex-col">
             {oldPrice && (
@@ -64,13 +83,7 @@ const ProductCard = ({ item }) => {
               ${price.toFixed(2)}
             </span>
           </div>
-          <button
-            type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-900 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            aria-label="Add to cart"
-          >
-            <ShoppingCart className="h-4 w-4" />
-          </button>
+          <AddToCartBtn itemProd={item} />
         </div>
       </div>
     </div>

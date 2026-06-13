@@ -9,9 +9,7 @@ import MobileLogoMenu from "./MobileLogoMenu";
 
 const Navbar = () => {
   return (
-    <header className="max-w-screen px-4 bg-white py-4  flex items-center justify-around ">
-
-
+    <header className="max-w-screen px-4 py-2  bg-white flex items-center justify-around ">
       {/* Logo */}
       <div className="flex justify-start gap-2.5 md:gap-0 items-center">
         <MobileLogoMenu />
@@ -21,8 +19,6 @@ const Navbar = () => {
       {/* Navbutton  */}
 
       <HeaderMenu />
-
-
 
       {/* Navadmin */}
 
