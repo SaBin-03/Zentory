@@ -45,21 +45,8 @@ const Footer = () => {
             <h2 className="text-2xl font-bold tracking-tight text-emerald-800">
               ZENTOR<span className="text-emerald-600">Y</span>
             </h2>
-            <p className="text-sm leading-relaxed text-zinc-500 max-w-xs">
-              Discover curated furniture collections at Shopcartyt, blending style and comfort to elevate your living spaces.
-            </p>
 
-            <div className="flex items-center space-x-3 pt-2 text-xs font-medium tracking-wide text-zinc-400">
-              <a href="#" className="hover:text-zinc-800 transition-colors">YT</a>
-              <span>•</span>
-              <a href="#" className="hover:text-zinc-800 transition-colors">GH</a>
-              <span>•</span>
-              <a href="#" className="hover:text-zinc-800 transition-colors">LN</a>
-              <span>•</span>
-              <a href="#" className="hover:text-zinc-800 transition-colors">FB</a>
-              <span>•</span>
-              <a href="#" className="hover:text-zinc-800 transition-colors">SL</a>
-            </div>
+
           </div>
 
           <div>

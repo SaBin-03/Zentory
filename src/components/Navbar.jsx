@@ -6,8 +6,10 @@ import Cart from "./Cart";
 import FavButton from "./FavButton";
 import Logo from "./Logo";
 import MobileLogoMenu from "./MobileLogoMenu";
+import Authbtn from "./Authbtn";
 
 const Navbar = () => {
+
   return (
     <header className="max-w-screen px-4 py-2  bg-white flex items-center justify-around ">
       {/* Logo */}
@@ -26,6 +28,7 @@ const Navbar = () => {
         <Searchbar />
         <Cart />
         <FavButton />
+        <Authbtn />
       </div>
     </header>
   );

@@ -1,10 +1,9 @@
 import Image from "next/image";
 import React from "react";
-import { ShoppingCart, Star, StarIcon } from "lucide-react"; // Optional: Install lucide-react for icons
+import { Star, StarIcon } from "lucide-react";
 import AddToFav from "./AddToFav";
 import AddToCartBtn from "./AddToCartBtn";
 import Link from "next/link";
-import { color } from "motion";
 
 const ProductCard = ({ item }) => {
   const {

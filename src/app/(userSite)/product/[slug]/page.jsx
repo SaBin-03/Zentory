@@ -1,5 +1,4 @@
 import AddToCartBtn from "@/components/AddToCartBtn";
-import AddToFav from "@/components/AddToFav";
 import Imageview from "@/components/Imageview";
 import { mongoConnect } from "@/lib/mongoConnect";
 import { ProdModel } from "@/models/productModel";
@@ -56,10 +55,9 @@ export default async function ProductPage({ params }) {
               Out of Stock
             </span>
           )}
-        </div>
-        <div className="flex items-center gap-2.5 lg:gap-5">
+        <div className="relative flex items-center gap-2.5 ">
           <AddToCartBtn product={matchedProduct} />
-          <AddToFav product={matchedProduct} showproduct={true} />
+        </div>
         </div>
       </div>
     </div>
